@@ -6,6 +6,7 @@ const logger = require('morgan')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+const catalogRouter = require('./routes/catalog')
 
 const app = express()
 
@@ -13,7 +14,7 @@ const app = express()
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
 const mongoDB =
-  'mongodb+srv://admin:OOnBasIKyvugXFEL@cluster0.z1mxrjj.mongodb.net/local_library?retryWrites=true&w=majority&appName=Cluster0'
+  'mongodb+srv://admin:F0geSHCIWbFxsm4w@cluster0.z1mxrjj.mongodb.net/local_library?retryWrites=true&w=majority&appName=Cluster0'
 
 main().catch((err) => console.log(err))
 async function main() {
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
+app.use('/catalog', catalogRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
