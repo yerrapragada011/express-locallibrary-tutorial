@@ -8,6 +8,7 @@ const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
 const catalogRouter = require('./routes/catalog')
 const compression = require('compression')
+const helmet = require('helmet')
 
 const app = express()
 
@@ -40,6 +41,16 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
 app.use('/catalog', catalogRouter)
+
+// Add helmet to the middleware chain.
+// Set CSP headers to allow our Bootstrap and Jquery to be served
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      'script-src': ["'self'", 'code.jquery.com', 'cdn.jsdelivr.net']
+    }
+  })
+)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
